@@ -10,7 +10,7 @@
   - Then select the files to "stage" in the top left panel
   - Write a commit message
   - Click `Commit` button
-8. And finally push your changes to submit your work. Click the `Push` button.
+7. And finally push your changes to submit your work. Click the `Push` button.
 
 Attention:
 - Only edit code within the code blocks.

@@ -13,7 +13,7 @@ We're going to work on the <a href="Data/TGA.txt" download target="_blank">TGA.t
 
 - at what temperature does the material decompose?
 - what is the mass percentage of metal catalyst in the sample?
-- 
+
 Before importing the data, the first thing to do is look at its structure.
 
 - How many lines in the header need to be skipped?

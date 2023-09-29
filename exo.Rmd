@@ -27,10 +27,12 @@ Before importing the data, the first thing to do is look at its structure.
 **1.** Knowing all this, let's import the data into a `dataframe` called `tga`:
 
 - Load the `tidyverse` package
-- Load `"Data/TGA.txt"` into a `tibble` using the `read_table()`{.R} function - refer to the help for the correct parameters to use.
+- Load ["Data/TGA.txt"](Data/TGA.txt) into a `tibble` using the `read_table()`{.R} function - refer to the help for the correct parameters to use.
 
 ```{r include=TRUE, warning = FALSE, message=FALSE, cache=FALSE}
-
+# Uncomment and write your code:
+# ____
+# tga <- _____
 ```
 
 --- 
@@ -46,7 +48,10 @@ Before importing the data, the first thing to do is look at its structure.
 Before any further processing, we need to take a look at our data. Using `ggplot2`, plot the `Mass` column against the `Tread` column using a black line and formatting the axis texts to show the units. Is there a problem with the plot? Check out what `geom_path()` will do.
 
 ```{r include=TRUE, warning = FALSE, message=FALSE, cache=FALSE}
-
+# Uncomment and write your code:
+# tga %>% 
+#     ggplot(_____) +
+#     ______
 ```
 
 --- 
@@ -56,9 +61,14 @@ Before any further processing, we need to take a look at our data. Using `ggplot
 So, modify `tga` to remove these two data ranges, and plot it again.
 
 ```{r include=TRUE, warning = FALSE, message=FALSE, cache=FALSE}
-tga_filtered <- tga %>% 
-        filter(_____, # Remove data from the temperature decrease
-               _____) # Remove repeated data at the beginning
+# Uncomment and write your code:
+# tga_filtered <- tga %>% 
+#         filter(_____, # Remove data from the temperature decrease
+#                _____) # Remove repeated data at the beginning
+
+# tga_filtered %>% 
+#     ggplot(_____) +
+#     ______
 ```
 
 --- 
@@ -70,7 +80,10 @@ tga_filtered <- tga %>%
 - Create a new `RemainingMass` column that will contain the percentage of remaining sample mass of individualized nanotubes.
 
 ```{r include=TRUE, warning = FALSE, message=FALSE, cache=FALSE}
-
+# Uncomment and write your code:
+# Mref <- ___
+# tga_filtered <-  tga_filtered %>% 
+#     mutate(____)
 ```
 
 --- 
@@ -78,7 +91,11 @@ tga_filtered <- tga %>%
 **5.** Now plot the percentage of mass remaining as a function of temperature, zooming in on the part we're interested in (i.e. not solvent evaporation).
 
 ```{r include=TRUE, warning = FALSE, message=FALSE, cache=FALSE}
-
+# Uncomment and write your code:
+# tga_filtered %>% 
+#     ggplot(_____) +
+#     coord_cartesian(____) +
+#     ______
 ```
 
 --- 
@@ -93,7 +110,17 @@ In ATG, the decomposition temperature of a compound is said to be reached when t
 
 Using the `diff()`{.R} function, implement a `derivative(x,y)` function that returns the first derivative $\partial y/\partial x$ given two vectors x and y. Make this function return a `dataframe` with column names `x` and `y`. Remember that the numeric derivative is defined by $\Delta y / \Delta x$.
 
-Then, use this function to calculate `d_tga`, the derivative of `RemainingMass` with respect to `Tread` for `Tread>150`.
+```{r include=TRUE, warning = FALSE, message=FALSE, cache=FALSE}
+# Uncomment and write your code:
+# derivative <- function(x,y){
+#     dy <- ____ # the actual derivative
+#     dx <- ____ # center the X values
+#     out <- tibble(____)
+#     return(out)
+# }
+```
+
+Then, use this `derivative(x,y)` function to calculate `d_tga`, the derivative of `RemainingMass` with respect to `Tread` for `Tread>150`.
 
 ```{r include=TRUE, warning = FALSE, message=FALSE, cache=FALSE}
 

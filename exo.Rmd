@@ -9,7 +9,7 @@ output:
         code_download  : FALSE
 ---
 
-We're going to work on the <a href="Data/TGA.txt" download target="_blank">TGA.txt</a> file, which contains the TGA of an aqueous solution of single-walled carbon nanotubes individualized by the addition of polymers and surfactants. What we want to know is:
+We're going to work on the <a href="Data/TGA.txt" download target="_blank">"Data/TGA.txt"</a> file, which contains the TGA of an aqueous solution of single-walled carbon nanotubes individualized by the addition of polymers and surfactants. What we want to know is:
 
 - at what temperature does the material decompose?
 - what is the mass percentage of metal catalyst in the sample?
@@ -27,8 +27,7 @@ Before importing the data, the first thing to do is look at its structure.
 **1.** Knowing all this, let's import the data into a `dataframe` called `tga`:
 
 - Load the `tidyverse` package
-- Download the TGA data file <a href="Data/TGA.txt" download target="_blank">TGA.txt</a>
-- Load it into a `tibble` using the `read_table()`{.R} function - refer to the help for the correct parameters to use..
+- Load `"Data/TGA.txt"` into a `tibble` using the `read_table()`{.R} function - refer to the help for the correct parameters to use.
 
 ```{r include=TRUE, warning = FALSE, message=FALSE, cache=FALSE}
 
@@ -44,7 +43,7 @@ Before importing the data, the first thing to do is look at its structure.
 - `Tread`: Temperature read in ˚C
 - `Mass`: Sample mass in mg
 
-Before any further processing, we need to take a look at our data. Using `ggplot2`, plot the `Mass` column against the `Tread` column using a black line and formatting the axis texts to show the units. Is there a problem? Check out what `geom_path()` will do.
+Before any further processing, we need to take a look at our data. Using `ggplot2`, plot the `Mass` column against the `Tread` column using a black line and formatting the axis texts to show the units. Is there a problem with the plot? Check out what `geom_path()` will do.
 
 ```{r include=TRUE, warning = FALSE, message=FALSE, cache=FALSE}
 
@@ -52,12 +51,14 @@ Before any further processing, we need to take a look at our data. Using `ggplot
 
 --- 
 
-**3.** You can see from this representation that some data ranges are to throw away: the cooling section, and the vertical drop at the start - this is due to the fact that the sample was in a sample changer, and lost water while waiting for the measurement to start.
+**3.** You can see from this representation that some data ranges are to throw away: the cooling section at the end of the experiment, and the vertical drop at the start - this is due to the fact that the sample was in a sample changer, and lost water while waiting for the measurement to start.
 
 So, modify `tga` to remove these two data ranges, and plot it again.
 
 ```{r include=TRUE, warning = FALSE, message=FALSE, cache=FALSE}
-
+tga_filtered <- tga %>% 
+        filter(_____, # Remove data from the temperature decrease
+               _____) # Remove repeated data at the beginning
 ```
 
 --- 
@@ -65,6 +66,7 @@ So, modify `tga` to remove these two data ranges, and plot it again.
 **4.** Finally, in TGA, we're interested in mass variation, not absolute mass.
 
 - What do you think is responsible for the (large) loss of mass before 150˚C?
+- Save the mass at 150ºC in the variable `Mref` (this is the reference mass, i.e. the actual initial mass of the sample)
 - Create a new `RemainingMass` column that will contain the percentage of remaining sample mass of individualized nanotubes.
 
 ```{r include=TRUE, warning = FALSE, message=FALSE, cache=FALSE}
@@ -89,7 +91,7 @@ So, modify `tga` to remove these two data ranges, and plot it again.
 
 In ATG, the decomposition temperature of a compound is said to be reached when the ATG curve reaches an inflection point. Determining the position of these inflection points is done by determining the position of the local extrema in the first derivative of the curve.
 
-Using the `diff()`{.R} function, implement a `derivative(x,y)` function that returns the first derivative $\partial y/\partial x$ given two vectors x and y. Make this function return a `dataframe` with column names `x` and `y`.
+Using the `diff()`{.R} function, implement a `derivative(x,y)` function that returns the first derivative $\partial y/\partial x$ given two vectors x and y. Make this function return a `dataframe` with column names `x` and `y`. Remember that the numeric derivative is defined by $\Delta y / \Delta x$.
 
 Then, use this function to calculate `d_tga`, the derivative of `RemainingMass` with respect to `Tread` for `Tread>150`.
 
@@ -101,7 +103,7 @@ Then, use this function to calculate `d_tga`, the derivative of `RemainingMass` 
 
 **7.** We will now determine the position of the local minima and save them in an `inflpoints` list.
 
-To do this, use [this thread on stackoverflow](https://stackoverflow.com/questions/6836409/finding-local-maxima-and-minima). We want to keep only the inflection points below 400˚C, and as the derivative curve is noisy we'll use the `span=150` parameter to work on smoothed data (you can play with this parameter to see its effects).
+To do this, use [this thread on stackoverflow](https://stackoverflow.com/a/55342945). We want to keep only the inflection points below 400˚C, and as the derivative curve is noisy we'll use the `span=150` parameter to work on smoothed data (you can play with this parameter to see its effects).
 
 ```{r include=TRUE, warning = FALSE, message=FALSE, cache=FALSE}
 
